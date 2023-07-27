@@ -1,0 +1,9 @@
+So far, from Eric Matthes' book Python Crash Course, I have learned the following:
+1. Variables and Data Types
+2. Lists and Tuples
+3. Dictionaries
+4. Conditional Statements or Program Flows
+5. for Loop
+6. Functions
+7. User Input and While Loops
+8. Classes
