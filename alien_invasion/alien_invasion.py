@@ -34,6 +34,9 @@ class AlienInvasion:
         
         # Set the background color.
         self.bg_color = (230, 230, 230)
+        
+        # Start Alien Invasion in an active state.
+        self.game_active = True
     
     def _create_fleet(self):
         """Create the fleet of aliens."""
@@ -151,20 +154,23 @@ class AlienInvasion:
     
     def _ship_hit(self):
         """Respond to the ship being hit by an alien."""
-        # Decrement ships_left.
-        self.stats.ships_left -= 1
-        
-        # Get rid of any remaining bullets and aliens.
-        self.bullets.empty()
-        self.aliens.empty()
-        
-        # Create a new fleet and center the ship.
-        self._create_fleet()
-        self.ship.center_ship()
-        
-        # Pause
-        sleep(0.5)
-    
+        if self.stats.ships_left > 0:
+            # Decrement ships_left.
+            self.stats.ships_left -= 1
+            
+            # Get rid of any remaining bullets and aliens.
+            self.bullets.empty()
+            self.aliens.empty()
+            
+            # Create a new fleet and center the ship.
+            self._create_fleet()
+            self.ship.center_ship()
+            
+            # Pause
+            sleep(0.5)
+        else:
+            self.game_active = False
+            
     def _update_aliens(self):
         """Check if the fleet is at an edge, then update positions."""
         self._check_fleet_edges()
@@ -173,6 +179,9 @@ class AlienInvasion:
         # Look for alien-ship collisions.
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
+            
+        # Look fot aliens hitting the bottom of the screen.
+        self._check_aliens_bottom()
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
