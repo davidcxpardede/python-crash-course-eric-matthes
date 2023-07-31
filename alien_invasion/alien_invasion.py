@@ -53,13 +53,13 @@ class AlienInvasion:
         
         current_x, current_y = alien_width, alien_height
         while current_y < (self.settings.screen_height - 3 * alien_height):
-            while current_x < (self.settings.screen_width - 2 * alien_width):
+            while current_x < (self.settings.screen_width - 3 * alien_width):
                 self._create_alien(current_x, current_y)
-                current_x += 2 * alien_width
+                current_x += 3 * alien_width
                 
             # Finished a row; reset x value, and increment y value.
             current_x = alien_width
-            current_y += 2 * alien_height
+            current_y += 3 * alien_height
     
     def _create_alien(self, x_position, y_position):
         """Create an alien and place it in the row."""
@@ -180,7 +180,11 @@ class AlienInvasion:
         """Respond to bullet-alien collisions."""
         # Remove any bullets and aliens that have collided.
         collisions = pygame.sprite.groupcollide(
-            self.bullets, self.aliens, False, True)
+            self.bullets, self.aliens, True, True)
+        
+        if collisions:
+            self.stats.score += self.settings.alien_points
+            self.sb.prep_score()
         
         if not self.aliens:
             # Destroy existing bullets and create new fleet.
