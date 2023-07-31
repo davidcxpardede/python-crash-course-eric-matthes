@@ -36,7 +36,7 @@ class AlienInvasion:
         self.bg_color = (230, 230, 230)
         
         # Start Alien Invasion in an active state.
-        self.game_active = True
+        self.game_active = False
     
     def _create_fleet(self):
         """Create the fleet of aliens."""
