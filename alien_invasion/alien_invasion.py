@@ -36,7 +36,7 @@ class AlienInvasion:
         # Set the background color.
         self.bg_color = (230, 230, 230)
         
-        # Start Alien Invasion in an active state.
+        # Start Alien Invasion in an inactive state.
         self.game_active = False
         
         # Make the Play button
@@ -84,9 +84,12 @@ class AlienInvasion:
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.ship.update()
-            self._update_bullets()
-            self._update_aliens()        
+            
+            if self.game_active:
+                self.ship.update()
+                self._update_bullets()
+                self._update_aliens()
+                  
             self._update_screen()
             self.clock.tick(60)
             
@@ -108,7 +111,16 @@ class AlienInvasion:
             
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
                
+    def _check_play_button(self, mouse_pos):
+        """Start a new game when the player clicks Play."""
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.game_active = True
+    
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
         if event.key == pygame.K_RIGHT:
