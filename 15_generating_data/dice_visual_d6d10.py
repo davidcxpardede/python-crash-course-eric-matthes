@@ -1,15 +1,13 @@
 import plotly.express as px
-
 from die import Die
 
-# Create two D6 dice.
+# Create a D6 and a D10.
 die_1 = Die()
-die_2 = Die()
+die_2 = Die(10)
 
 # Make some rolls, and store results in a list.
 results = []
-experiments = 10000
-
+experiments = 500_000
 for roll_num in range(experiments):
     result = die_1.roll() + die_2.roll()
     results.append(result)
@@ -23,7 +21,7 @@ for value in poss_results:
     frequencies.append(frequency)
 
 # Visualize the results.
-title = "Results of Rolling Two D6 Dice 1,000 Times"
+title = f"Results of Rolling a D6 and a D10 {experiments} Times"
 labels = {'x': 'Result', 'y':'Frequency of Result'}
 fig = px.bar(x=poss_results, y=frequencies, title=title, labels=labels)
 
